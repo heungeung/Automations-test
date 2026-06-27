@@ -1,0 +1,46 @@
+[
+  {
+    "symbol": "102780",
+    "name": "KODEX 삼성그룹",
+    "provider": "삼성자산운용",
+    "asOf": "샘플 데이터",
+    "holdings": [
+      { "symbol": "005930", "name": "삼성전자", "weight": 25.0 },
+      { "symbol": "207940", "name": "삼성바이오로직스", "weight": 15.0 },
+      { "symbol": "006400", "name": "삼성SDI", "weight": 12.0 },
+      { "symbol": "028260", "name": "삼성물산", "weight": 10.5 }
+    ]
+  },
+  {
+    "symbol": "138520",
+    "name": "TIGER 삼성그룹펀더멘털",
+    "provider": "미래에셋자산운용",
+    "asOf": "샘플 데이터",
+    "holdings": [
+      { "symbol": "005930", "name": "삼성전자", "weight": 24.0 },
+      { "symbol": "207940", "name": "삼성바이오로직스", "weight": 13.0 },
+      { "symbol": "006400", "name": "삼성SDI", "weight": 11.0 }
+    ]
+  },
+  {
+    "symbol": "364970",
+    "name": "TIGER KRX BBIG K-뉴딜",
+    "provider": "미래에셋자산운용",
+    "asOf": "샘플 데이터",
+    "holdings": [
+      { "symbol": "035420", "name": "NAVER", "weight": 12.0 },
+      { "symbol": "035720", "name": "카카오", "weight": 11.0 },
+      { "symbol": "051910", "name": "LG화학", "weight": 10.5 }
+    ]
+  },
+  {
+    "symbol": "091160",
+    "name": "KODEX 반도체",
+    "provider": "삼성자산운용",
+    "asOf": "샘플 데이터",
+    "holdings": [
+      { "symbol": "000660", "name": "SK하이닉스", "weight": 18.0 },
+      { "symbol": "042700", "name": "한미반도체", "weight": 11.0 }
+    ]
+  }
+]

@@ -4,15 +4,15 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#0f766e" />
-    <title>주식 포트폴리오</title>
+    <title>한국 주식 포트폴리오 리서치</title>
     <link rel="manifest" href="manifest.webmanifest" />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <header class="app-header">
       <div>
-        <p class="eyebrow">KR · US Portfolio</p>
-        <h1>주식 포트폴리오</h1>
+        <p class="eyebrow">KR Stock Research · PWA</p>
+        <h1>한국 주식 포트폴리오 리서치</h1>
       </div>
       <button class="icon-button" id="installButton" type="button" hidden title="앱 설치">
         설치
@@ -20,102 +20,108 @@
     </header>
 
     <main class="app-shell">
-      <section class="summary-grid" aria-label="포트폴리오 요약">
-        <article class="summary-card">
-          <span>한국 평가금액</span>
-          <strong id="krValue">₩0</strong>
-        </article>
-        <article class="summary-card">
-          <span>한국 손익</span>
-          <strong id="krProfit">₩0</strong>
-        </article>
-        <article class="summary-card">
-          <span>미국 평가금액</span>
-          <strong id="usValue">$0.00</strong>
-        </article>
-        <article class="summary-card">
-          <span>미국 손익</span>
-          <strong id="usProfit">$0.00</strong>
-        </article>
-      </section>
-
-      <section class="tool-panel" aria-label="종목 추가">
-        <form id="stockForm" class="stock-form">
+      <section class="search-panel" aria-label="한국 종목 조회">
+        <form id="lookupForm" class="lookup-form">
           <label>
-            시장
-            <select id="market">
-              <option value="KR">한국</option>
-              <option value="US">미국</option>
-            </select>
+            종목코드
+            <input id="symbolInput" type="text" inputmode="numeric" maxlength="6" placeholder="005930" required />
           </label>
           <label>
             종목명
-            <input id="name" type="text" placeholder="삼성전자" required />
+            <input id="nameInput" type="text" placeholder="삼성전자" />
           </label>
-          <label>
-            티커
-            <input id="ticker" type="text" placeholder="005930.KS / AAPL" required />
-          </label>
-          <label>
-            보유수량
-            <input id="quantity" type="number" min="0" step="0.0001" required />
-          </label>
-          <label>
-            평균단가
-            <input id="avgPrice" type="number" min="0" step="0.01" required />
-          </label>
-          <label>
-            현재가
-            <input id="currentPrice" type="number" min="0" step="0.01" required />
-          </label>
-          <button type="submit">추가</button>
+          <button type="submit">조회</button>
         </form>
+        <p id="statusText" class="status-text">한국 상장 종목코드 6자리를 입력하세요.</p>
+      </section>
+
+      <section class="quote-grid" aria-label="종목 기본 정보">
+        <article class="quote-card main-quote">
+          <span>현재가</span>
+          <strong id="currentPrice">-</strong>
+          <small id="quoteName">종목을 조회하면 표시됩니다.</small>
+        </article>
+        <article class="quote-card">
+          <span>전일 대비</span>
+          <strong id="priceChange">-</strong>
+        </article>
+        <article class="quote-card">
+          <span>거래량</span>
+          <strong id="volume">-</strong>
+        </article>
+        <article class="quote-card">
+          <span>최근 거래일</span>
+          <strong id="tradeDate">-</strong>
+        </article>
+      </section>
+
+      <section class="chart-section" aria-label="차트">
+        <div class="section-heading">
+          <h2>가격 차트</h2>
+          <div class="segmented-control" role="group" aria-label="차트 기간">
+            <button class="active" type="button" data-range="1d">일봉</button>
+            <button type="button" data-range="1wk">주봉</button>
+            <button type="button" data-range="1mo">월봉</button>
+          </div>
+        </div>
+        <div class="chart-wrap">
+          <canvas id="priceChart" width="1080" height="420"></canvas>
+        </div>
+      </section>
+
+      <section class="details-grid">
+        <article class="info-panel">
+          <div class="section-heading">
+            <h2>기본 정보</h2>
+          </div>
+          <dl class="info-list">
+            <div>
+              <dt>Yahoo 심볼</dt>
+              <dd id="yahooSymbol">-</dd>
+            </div>
+            <div>
+              <dt>거래소</dt>
+              <dd id="exchangeName">-</dd>
+            </div>
+            <div>
+              <dt>통화</dt>
+              <dd id="currency">-</dd>
+            </div>
+            <div>
+              <dt>52주 범위</dt>
+              <dd id="yearRange">-</dd>
+            </div>
+          </dl>
+        </article>
+
+        <article class="info-panel">
+          <div class="section-heading">
+            <h2>10% 이상 보유 ETF</h2>
+            <span id="etfCount">0개</span>
+          </div>
+          <div id="etfList" class="etf-list">
+            <p class="empty-state">종목을 조회하면 ETF 편입 정보를 확인합니다.</p>
+          </div>
+        </article>
       </section>
 
       <section class="portfolio-section">
         <div class="section-heading">
-          <h2>한국 상장 주식</h2>
-          <span id="krCount">0개</span>
+          <h2>최근 조회 종목</h2>
+          <span id="recentCount">0개</span>
         </div>
         <div class="table-wrap">
           <table>
             <thead>
               <tr>
-                <th>종목</th>
-                <th>티커</th>
-                <th>수량</th>
-                <th>평균단가</th>
+                <th>종목코드</th>
+                <th>종목명</th>
                 <th>현재가</th>
-                <th>평가금액</th>
-                <th>손익</th>
+                <th>조회일시</th>
                 <th></th>
               </tr>
             </thead>
-            <tbody id="krRows"></tbody>
-          </table>
-        </div>
-      </section>
-
-      <section class="portfolio-section">
-        <div class="section-heading">
-          <h2>미국 상장 주식</h2>
-          <span id="usCount">0개</span>
-        </div>
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>종목</th>
-                <th>티커</th>
-                <th>수량</th>
-                <th>평균단가</th>
-                <th>현재가</th>
-                <th>평가금액</th>
-                <th>손익</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody id="usRows"></tbody>
+            <tbody id="recentRows"></tbody>
           </table>
         </div>
       </section>

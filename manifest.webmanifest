@@ -1,7 +1,7 @@
 {
-  "name": "주식 포트폴리오",
-  "short_name": "포트폴리오",
-  "description": "한국과 미국 상장 주식을 관리하는 포트폴리오 웹앱",
+  "name": "한국 주식 포트폴리오 리서치",
+  "short_name": "주식리서치",
+  "description": "한국 상장 종목의 현재가, 차트, ETF 편입 정보를 확인하는 웹앱",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
